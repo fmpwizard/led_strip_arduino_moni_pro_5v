@@ -105,12 +105,15 @@ void colorWipe(uint32_t c, uint8_t wait) {
     on = false;
     return;
   }
-  for(uint16_t i=0; i<strip.numPixels(); i++) {
-    strip.setPixelColor(i, c);
+  for(uint16_t x=0; x < strip.numPixels(); x++) {
+    strip.setPixelColor(x, c);
     strip.show();
-    if (val == 0 && on == true){
-      lightsOff();
-      return;
+    if (x % 10 == 0) {
+      val = digitalRead(inPin);
+      if (val == 0 && on == true){
+        lightsOff();
+        return;
+      }
     }
     delay(wait);
   }
